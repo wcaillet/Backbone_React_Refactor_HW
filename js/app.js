@@ -73,6 +73,32 @@ function app() {
 		}
 	})
 
+	var HomeView = React.createClass ({
+		render: function(){
+			return(
+				<div className="pageContainer">
+					<Header/>
+					<Search/>
+					<p>Search for gifs here!</p>
+				</div>
+				)
+		}
+	})
+
+
+	var SearchBar = React.createClass ({
+		_search: function(keyEvent) {		
+			if (keyEvent.keyCode === 13) {
+				window.location.hash = `scroll/${keyEvent.target.value}`
+				keyEvent.target.value = ""
+			}
+		},
+
+		render: function(){
+			return <input onKeyDown={this._search} />
+		}
+	})
+
 	var Header = React.createClass({
 		render: function() {
 			return (
