@@ -35,11 +35,138 @@ import fetch from "isomorphic-fetch"
 
 import DOM from 'react-dom'
 import React, {Component} from 'react'
+import Backbone from 'backbone'
 
 function app() {
-    // start app
-    // new Router()
-    DOM.render(<p>test 2</p>, document.querySelector('.container'))
+
+// ----- Model/Collection ----- //
+
+ 	var IphyCollection = Backbone.Collection.extend({
+		url: 'http://api.giphy.com/v1/gifs/search?',
+		_apiKey: "dc6zaTOxFJmzC",
+
+		parse: function(rawJSON) {
+			console.log(rawJSON)
+			return rawJSON.data
+		}
+	})
+
+// ----- View  ----- //
+
+	var AppView = React.createClass({
+
+		componentWillMount: function(){ // before anything renders this will act as an event listener, want it to only run once
+			var self = this
+			this.props.gifs.on('sync',function() {self.forceUpdate()})
+		},
+
+		render: function() {
+			console.log('rendering app')
+
+			return (
+				<div className="gifsContainer" >
+					<Header/>
+					<Search/>
+					<Scroll gifs={this.props.gifs} />
+				</div>
+				)
+		}
+	})
+
+	var Header = React.createClass({
+		render: function() {
+			return (
+				<div className="titleContainer">
+					<h1 className="pageTitle">Iphy Page!</h1>
+					<h3 className="subTitle">Search for the gifs</h3>
+				</div>
+				)
+		}
+	})
+
+	var Scroll = React.createClass({
+		_getGifsJsx: function(objArr) {
+			// method 1
+			var gifsArray = []
+			var counter = 0
+			objArr.forEach(function(gifObj) {
+				counter += 1
+				var component = <Gifs gif={gifObj} key={counter} />
+				gifsArray.push(component)
+			})
+			return gifsArray
+		},
+
+		render: function() {
+			return (
+				<div className="gifScroll">
+					{this._getGifsJsx(this.props.gifs.models)}
+				</div>
+				)
+		}
+	})
+
+	var Gif = React.createClass({
+
+		render: function() {
+			console.log(this)
+			var gifModel = this.props.gif
+			console.log(gifModel.get('cats'))
+
+			return (
+				<div className="gif">
+					<img src={gifModel.get('images').original.url} />
+				</div>
+				)
+		}
+	})
+
+
+// ------- Router  ------- //
+
+	var IphyRouter = Backbone.Router.extend({
+
+		routes: {
+			"scroll/:query": "handleScrollView",
+			"*default": "home"
+		},
+
+		handleScrollView: function(query) { //run promise
+
+			this.collection.reset()
+			this.collection.fetch({
+				data: {
+					q: query,
+					"api_key":this.collection._apiKey
+				}
+			})	
+
+			DOM.render(<AppView gifs={this.collection} />, document.querySelector('.container')) //render data!
+		},
+
+		home: function() {
+			location.hash = "home"
+			DOM.render(<HomeView/>, document.querySelector('.container'))
+		},
+
+		initialize: function() {
+			this.collection = new IphyCollection
+			Backbone.history.start()
+		}
+	})
+
+	var rtr = new IphyRouter()
 }
 
 app()
+
+
+
+
+
+
+
+
+
+
+
