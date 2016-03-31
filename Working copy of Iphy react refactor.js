@@ -1,43 +1,12 @@
 // es5, 6, and 7 polyfills, powered by babel
 import polyfill from "babel-polyfill"
-
-//
-// fetch method, returns es6 promises
-// if you uncomment 'universal-utils' below, you can comment out this line
 import fetch from "isomorphic-fetch"
 
-// universal utils: cache, fetch, store, resource, fetcher, router, vdom, etc
-// import * as u from 'universal-utils'
 
-// the following line, if uncommented, will enable browserify to push
-// a changed fn to you, with source maps (reverse map from compiled
-// code line # to source code line #), in realtime via websockets
-// -- browserify-hmr having install issues right now
-// if (module.hot) {
-//     module.hot.accept()
-//     module.hot.dispose(() => {
-//         app()
-//     })
-// }
-
-// Check for ServiceWorker support before trying to install it
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('./serviceworker.js').then(() => {
-//         // Registration was successful
-//         console.info('registration success')
-//     }).catch(() => {
-//         console.error('registration failed')
-//             // Registration failed
-//     })
-// } else {
-//     // No ServiceWorker Support
-// }
 
 import DOM from 'react-dom'
 import React, {Component} from 'react'
 import Backbone from 'backbone'
-import $ from 'jquery'
-import jquery from 'jquery'
 
 function app() {
  
@@ -65,7 +34,7 @@ function app() {
 			return (
 				<div className="pageContainer">
 					<Header/>
-					<Search/>
+					<SearchBar/>
 					<Scroll gifs={this.props.gifs}/>
 				</div>
 				)
@@ -78,13 +47,13 @@ function app() {
 				<div className="pageContainer">
 					<Header/>
 					<SearchBar />
-					<p>Let's find some awesome gifs!</p>
+					<p>Welcome to Iphs! Search above.</p>
 				</div>
 				)
 		}
 	})
 
-	var Search = React.createClass ({
+	var SearchBar = React.createClass ({
 		_search: function(keyEvent) {		
 			if (keyEvent.keyCode === 13) {
 				window.location.hash = `scroll/${keyEvent.target.value}`
@@ -102,7 +71,7 @@ function app() {
 			return (
 				<div className="titleContainer">
 					<h1 className="pageTitle">Iphy</h1>
-					<h3 className="subTitle">Search for gifs!</h3>
+					<h3 className="subTitle">Search iphs</h3>
 				</div>
 				)
 			}
@@ -180,14 +149,3 @@ function app() {
 }
 
 app()
-
-
-
-
-
-
-
-
-
-
-

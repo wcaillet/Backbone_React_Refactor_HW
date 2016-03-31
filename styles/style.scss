@@ -1,22 +1,22 @@
 @import "../bower_components/normalize-scss/_normalize.scss";
 @import "../bower_components/typeplate-starter-kit/scss/_typeplate.scss";
 
-p+p {
-    text-indent: 0;
-    margin-top: 0;
-}
+// p+p {
+//     text-indent: 0;
+//     margin-top: 0;
+// }
 
-p {
-    max-width: 80ch;
-    margin-left: 0;
-    margin-right: auto;
-}
+// p {
+//     max-width: 80ch;
+//     margin-left: 0;
+//     margin-right: auto;
+// }
 
-ul, ol {
-    max-width: 80ch;
-    margin-left: 0;
-    margin-right: auto;
-}
+// ul, ol {
+//     max-width: 80ch;
+//     margin-left: 0;
+//     margin-right: auto;
+// }
 
 /**
  * BOX-SIZING
@@ -35,24 +35,24 @@ ul, ol {
  * GRIDS
  */
 
-.grid {
-    display: block;
-    text-align: justify;
-    font-size: 0;
-    position: relative;
+// .grid {
+//     display: block;
+//     text-align: justify;
+//     font-size: 0;
+//     position: relative;
 
-    > * {
-        display: inline-block;
-        width: 100%;
-        font-size: 1rem;
-        text-align: left;
-    }
+//     > * {
+//         display: inline-block;
+//         width: 100%;
+//         font-size: 1rem;
+//         text-align: left;
+//     }
 
-    &:after {
-        display: table;
-        width: 100%;
-    }
-}
+//     &:after {
+//         display: table;
+//         width: 100%;
+//     }
+// }
 
 @mixin grid_r($col, $width, $padding: 0) {
     @media screen and (min-width: #{$width}px) {
@@ -127,3 +127,14 @@ body {
 /**
  * App code
  */
+
+ .container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    background-color: pink;
+    border: 15px solid purple;
+ }
+
+
+
